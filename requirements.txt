@@ -1,5 +1,6 @@
 Django==1.4.2
 django-pipeline==1.2.17
 gunicorn==0.14.6
+jsmin==2.0.2
 wsgiref==0.1.2
 yuicompressor==2.4.7
