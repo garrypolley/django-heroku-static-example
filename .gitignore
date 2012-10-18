@@ -4,3 +4,4 @@
 local_settings.py
 *.db
 dhs/static/less/*.css
+/static
