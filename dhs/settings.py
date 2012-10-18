@@ -115,10 +115,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
+    'dhs',
+    'pipeline',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -149,3 +147,57 @@ LOGGING = {
         },
     }
 }
+
+
+import os
+
+# Our django-pipeline settings
+PATH_TO_HERE = os.getcwd()
+
+STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
+
+PIPELINE_CSS = {
+    'standard': {
+        'source_filenames': (
+          'css/chosen.css',
+          'less/bootstrap_files/bootstrap.less',
+        ),
+        'output_filename': 'css/s.css',
+        'extra_context': {
+            'media': 'screen,projection',
+        },
+    },
+
+    'my_site': {
+        'source_filenames': (
+            'less/global.less',
+            'less/simple.less',
+        ),
+        'output_filename': 'css/g.css',
+        'extra_context': {
+            'media': 'screen,projection',
+        }
+    }
+}
+
+PIPELINE_JS = {
+    'standard': {
+        'source_filenames': [
+            'js/sample1.js',
+            'js/sample2.js',
+        ],
+        'output_filename': 'js/s.js',
+    }
+}
+
+PIPELINE_COMPILERS = (
+    'pipeline.compilers.less.LessCompiler',
+)
+
+# If we are on heroku we want to re-define the location of the less binary.
+HEROKU_LESSC = os.path.join(PATH_TO_HERE, 'lib/node_modules/less/bin/lessc')
+HEROKU_NODE = os.path.join(PATH_TO_HERE, 'bin/node')
+if os.path.exists(HEROKU_LESSC):
+    PIPELINE_LESS_BINARY = "{0} {1}".format(HEROKU_NODE, HEROKU_LESSC)
+
+PIPELINE_LESS_ARGUMENTS = '--include-path=' + ':'.join('{0}/{1}/static/less'.format(PATH_TO_HERE, app) for app in INSTALLED_APPS if app in os.listdir(PATH_TO_HERE))

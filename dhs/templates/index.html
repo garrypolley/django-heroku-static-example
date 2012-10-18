@@ -1,0 +1,75 @@
+{% load compressed static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Example Site for Heroku Django deployments</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Simple exapmle site for heroku and django">
+    <meta name="author" content="Garry Polley">
+
+    {% comment %}
+    Notice the template tag below 'compressed_css' it is passed the key we defined in the
+    bottom of settings.py file.  It links to the chosen.css and all the bootstrap less files
+    that are in the less folder.  It works for both local and remote deployments.
+    {% endcomment %}
+
+    {% compressed_css 'standard' %}
+    {% compressed_css 'my_site' %}
+
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">Heroku Deploy</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#about">Place Holder</a></li>
+              <li><a href="#contact">Place Holder</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <h1>Basic Page</h1>
+      <p>This page is only used to show an example of Django, Heroku, and django-pipeline working
+        together.</p>
+
+
+      <h2>Example pop-up</h2>
+      <p>Notice that anything you click on with an anchor does a popup.  <a>pop-up</a>.</p>
+
+      <h2>Example color change</h2>
+      <p>Notice the color change in the list below.</p>
+      <ol id="orderedlist">
+        <li>orange</li>
+        <li>red</li>
+        <li>green</li>
+      </ol>
+
+    </div> <!-- /container -->
+
+    {% comment %}
+    Notice the template tag below 'compressed_js' it is passed the key we defined in the
+    bottom of settings.py file.  It links to the sample1.js and the sample2.js.  It works
+    for both local and remote deployments.
+    {% endcomment %}
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+    <!-- load js last it's nicer -->
+    {% compressed_js 'standard' %}
+
+  </body>
+</html>
