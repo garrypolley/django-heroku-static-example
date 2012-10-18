@@ -117,6 +117,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'dhs',
     'pipeline',
+    'gunicorn',
 )
 
 # A sample logging configuration. The only tangible logging
